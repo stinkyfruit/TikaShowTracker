@@ -2,11 +2,12 @@
 
 > Pithy project description
 
+
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Kristen Haydel
+  - __Scrum Master__: Irene Koan 
+  - __Development Team Members__: Allan Trinh, Travis Miller
 
 ## Table of Contents
 
