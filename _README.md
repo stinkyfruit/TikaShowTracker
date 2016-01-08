@@ -1,12 +1,13 @@
 # Project Name
 
-> Pithy project description
+> Love watching TV and don't want to miss out on your favorite show? Try __app name___! Save your favorite show's episodes and easily get up-to-date with the click of a button!
+
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Kristen Haydel
+  - __Scrum Master__: Irene Koan 
+  - __Development Team Members__: Allan Trinh, Travis Miller
 
 ## Table of Contents
 

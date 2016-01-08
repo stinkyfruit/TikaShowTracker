@@ -1,4 +1,4 @@
-# Project Name #
+# Greenfield #
 
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -17,28 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+  > Online DVR(To be changed)
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  > This is for anyone who watches TV shows and likes to stay up-to-date on latest episodes. 
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  > This application allows a user to follow their favorite TV shows and keep track of which episodes they missed. It provides real-time updates of missed shows, so if you miss an episode, it will get added to your "watch" queue!!
 
 ## Problem ##
-  > Describe the problem your product solves.
+  > Many people who watch TV get behind in watching their favorite shows on a weekly basis. 
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  > This product keeps track of episodes on their release date, and you can keep track of watched episodes. 
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  > "This application is amazing if you're a regular TV watcher. It takes the thinking out of remembering what episodes you missed."
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > To get started, you simply create a user profile, and start following your shows. Your "to watch" episodes will be automatically populated in your "to watch" list when the episode runs. 
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > "This application is amazing. Now I know exactly what episodes I've missed, or exactly when an episode runs."
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  > Simply go to our website, and try our application out today!
