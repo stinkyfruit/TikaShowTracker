@@ -1,8 +1,14 @@
 //bcrypt for encryption
+
 var bcrypt = require('bcrypt');
 //hat for token
 var hat = require('hat');
 
+//requiring the currently run server
+var app = require('./server.js');
+
+// genSaltSync(rounds)
+// rounds - [OPTIONAL] - the number of rounds to process the data for. (default - 10)
 var salt = bcrypt.genSaltSync(10);
 
 //when the front-end sends a post request at signup
@@ -33,7 +39,3 @@ app.post('/login', function(req, res){
     username: req.body.username
   }
 })
-
-
-//requiring the currently run server
-var app = require('../server.js');
