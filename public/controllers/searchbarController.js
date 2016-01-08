@@ -9,23 +9,19 @@
     function searchbarController($scope, show) {
    
       $scope.itemArray = [];
-      $scope.randomf = function(title){
-        console.log(title);
+      $scope.searchImdb = function(title){
         if(title.length > 1){
           show.search(title).then(function(data){
             if(data !== undefined){
-
               $scope.itemArray = data;
-
             }
           })
         } else {
           $scope.itemArray = [];
         }
-        console.log($scope.itemArray);
       }
       $scope.selection= function(show){
-        
+        //selected show
         console.log(show);
       }      
     }

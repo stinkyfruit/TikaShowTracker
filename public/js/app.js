@@ -36,15 +36,6 @@
             controller: "dashboardChildController",
             controllerAs: "dashboardChildVm"
           })
-
-        
-        
-
-
-
-
-
     }
-
 
 })();
