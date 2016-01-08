@@ -1,3 +1,7 @@
+html, body {
+  height: 100%;
+}
+
 .view {
   height: 100%;
 }
@@ -19,16 +23,23 @@
 
 
 .login {
-  background: #eee;
+  background: #fafafa;
   height: 100%;
 }
 
-.login_container {
+.login-container {
   height: 300px;
   margin-top: 30%;
+  padding-top: 20px;
   border-radius: 4px;
   border: 2px solid #ccc;
   background: #FFF;
+}
+
+.login header {
+  text-align: center;
+  font-size: 18px;
+  padding-bottom: 30px;
 }
 
 .login_inputs header {
