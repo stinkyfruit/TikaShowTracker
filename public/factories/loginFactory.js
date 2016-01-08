@@ -10,7 +10,8 @@
       function signin(user){
         return $http({
           method: "POST",
-          url: "/api/user"
+          url: "/signup",
+          data: user
         }).then(function(res){
           console.log(res);
         })

@@ -8,7 +8,7 @@
     function loginController ($state, Auth) { 
       var vm = this;
       vm.login = function () {
-        Auth.login();
+        Auth.login({username:"Allan", password:"hi"});
         // $state.go("dashboard.child")
       }
 
