@@ -1,0 +1,14 @@
+.view {
+  height: 100%;
+}
+
+.dashboard_header {
+  height: 60px;
+  border-bottom: 2px solid #eee;
+}
+
+.dashboard_header h1 {
+  color: 444;
+  font-size: 20px;
+  padding-top: 12px
+}
