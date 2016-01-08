@@ -5,12 +5,14 @@
         .module('app')
         .controller('loginController', loginController);
 
-    function loginController ($state) { 
+    function loginController ($state, Auth) { 
       var vm = this;
       vm.login = function () {
-        $state.go("dashboard.child")
+        Auth.login();
+        // $state.go("dashboard.child")
       }
 
     }
+
 
   })();
