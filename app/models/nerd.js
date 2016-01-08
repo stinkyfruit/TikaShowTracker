@@ -1,10 +1,22 @@
 var mongoose = require('mongoose');
 
 //creating the schema for the users
-var usersSchema = mongoose.Schema({
-  name: String,
-  password: String
+var UserSchema = mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  access_token: {
+    type: String,
+    required: true
+  }
 });
 
 //mongoose model for users utilizing users schema
-module.exports = mongoose.model('User', usersSchema);
+module.exports = mongoose.model('users', UserSchema);
+
