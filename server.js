@@ -17,7 +17,8 @@ var cookieParser = require('cookie-parser');
 //connect to local database
 //note: when heroku runs this app, it will get the environment variable that was set
 //if statement: mongolab uri or this local host
-mongoose.connect('mongodb://localhost/bugatti', function(err, result){
+var database = 'mongodb://localhost/bugatti';
+mongoose.connect(database, function(err, result){
   if(err) return err;
   console.log('Successfully connected to DB')
 });
@@ -40,6 +41,8 @@ require('./public/js/appRoutes')
 //express Express' built in middleware - express.static
 //
 express.static(__dirname + '/public');
+
+modules.exports.app = app;
 
 
 
