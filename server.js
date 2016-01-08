@@ -40,9 +40,9 @@ require('./public/js/appRoutes')
 
 //express Express' built in middleware - express.static
 //
-express.static(__dirname + '/public');
+app.use(express.static(__dirname + '/public'));
 
-modules.exports.app = app;
+module.exports.app = app;
 
 
 
