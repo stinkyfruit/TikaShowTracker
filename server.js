@@ -45,9 +45,9 @@ app.post('/signup', function(req, res){
     password:
     //asynchronous hash function from bcrypt; pass encrypted and salt used
     bcrypt.genSaltSync(10, function(err, salt){
-      if(err) throw error;
+      if(err) throw err;
       bcrypt.hash(req.body.password, salt, null, function(err, hash){
-        if(err) throw error;
+        if(err) throw err;
         return hash;
       });
     }),
@@ -55,7 +55,7 @@ app.post('/signup', function(req, res){
     access_token: hat()
   };
   User.create(user, function(err){
-    if (err) throw error;
+    if (err) throw err;
     //maxAge is a string that is 'Convenient option for setting the expiry time relative to the current time in milliseconds.'
     //httpOnly is a Boolean that '  Flags the cookie to be accessible only by the web server.'
     res.cookie('access_token', user.access_token, {maxAge: 900000, httpOnly: true});
@@ -70,9 +70,9 @@ app.post('/login', function(req, res){
   };
 
   User.findOne(user_login, function(err, user) {
-    if(err) throw error;
+    if(err) throw err;
     if(user && bcrypt.compare(req.body.password, user.password, function(err, match){
-      if (err) throw error;
+      if (err) throw err;
       return match;
     })) {
       user.access_token = hat();
