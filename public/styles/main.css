@@ -2,6 +2,10 @@
   height: 100%;
 }
 
+.no-pad {
+  padding: 0 0 0 0;
+}
+
 .dashboard_header {
   height: 60px;
   border-bottom: 2px solid #eee;
@@ -11,4 +15,23 @@
   color: 444;
   font-size: 20px;
   padding-top: 12px
+}
+
+.login {
+  background: #eee;
+  height: 100%;
+}
+
+.login_container {
+  height: 300px;
+  margin-top: 30%;
+  border-radius: 4px;
+  border: 2px solid #ccc;
+  background: #FFF;
+}
+
+.login_inputs header {
+  text-align: center;
+  padding-top: 30px;
+  margin-bottom: 30px;
 }
