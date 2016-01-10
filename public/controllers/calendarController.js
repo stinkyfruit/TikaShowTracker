@@ -13,7 +13,10 @@
       $scope.clear = function() {
         $scope.dt = null;
       };
-
+      $scope.send = function(){
+        //submit
+        console.log($scope.dt);
+      };
       // Disable weekend selection
       // $scope.disabled = function(date, mode) {
       //   return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
