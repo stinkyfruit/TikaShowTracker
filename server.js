@@ -14,7 +14,7 @@ var hat = require('hat');
 var User = require('./app/models/nerd.js');
 
 //connect to local database
-//note: when heroku runs this app, it will get the environment variable that was set
+// note: when heroku runs this app, it will get the environment variable that was set
 //if statement: mongolab uri or this local host
 var database = 'mongodb://localhost/bugatti';
 mongoose.connect(database, function(err, result){
@@ -65,25 +65,56 @@ app.post('/signup', function(req, res){
 
 
 app.post('/login', function(req, res){
+  //check username
+  //check password
+  //create a new token?
+  // console.log(req.body);
+
+  //the request body
   var user_login = {
-    username: req.body.username
+    username: req.body.username;
+    password: req.body.password;
   };
 
-  User.findOne(user_login, function(err, user) {
-    if(err) throw err;
-    if(user && bcrypt.compare(req.body.password, user.password, function(err, match){
-      if (err) throw err;
-      return match;
-    })) {
-      user.access_token = hat();
-      user.save();
-      res.cookie('access_token', user.access_token, {maxAge: 900000, httpOnly: true});
-      res.send('Successfully Logged In');
-    } else {
-      res.send('Invalid Username and Password');
-    }
+  // User.findOne(user_login, function(err, user) {
+  //   if(err) throw err;
+  //   if(user && bcrypt.compare(req.body.password, user.password, function(err, match){
+  //     if (err) throw err;
+  //     return match;
+  //   })) {
+  //     user.access_token = hat();
+  //     user.save();
+  //     res.cookie('access_token', user.access_token, {maxAge: 900000, httpOnly: true});
+  //     res.send('Successfully Logged In');
+  //   } else {
+  //     res.send('Invalid Username and Password');
+  //   }
   });
-});
+//   console.log(req.body);
+//   var user = {
+//     username: req.body.username,
+//     password:
+//     //asynchronous hash function from bcrypt; pass encrypted and salt used
+//     bcrypt.genSaltSync(10, function(err, salt){
+//       if(err) throw err;
+//       bcrypt.hash(req.body.password, salt, null, function(err, hash){
+//         if(err) throw err;
+//         return hash;
+//       });
+//     }),
+//     //randomly generates a token by the hat module
+//     access_token: hat()
+//   };
+//   console.log(user);
+//   User.create(user, function(err){
+//     if (err) throw err;
+//     //maxAge is a string that is 'Convenient option for setting the expiry time relative to the current time in milliseconds.'
+//     //httpOnly is a Boolean that '  Flags the cookie to be accessible only by the web server.'
+//     console.log('test');
+//     res.cookie('access_token', user.access_token, {maxAge: 900000, httpOnly: true});
+//     res.send('success');
+//   });
+// });
 
 
 //curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:3000/signup
