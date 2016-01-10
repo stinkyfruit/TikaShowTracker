@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app', ['ui.router', 'ui.select', 'ngSanitize'])
+        .module('app', ['ui.router', 'ui.select', 'ngSanitize', 'ui.bootstrap'])
         .config(config);
 
     function config($stateProvider, $urlRouterProvider) { 
@@ -24,6 +24,11 @@
           url: '/search',
           templateUrl: "../views/searchbar.html",
           controller:"searchbarController"
+        })
+        .state('calendar', {
+          url:'/calendar',
+          templateUrl:'../views/calendar.html',
+          controller: "calendarController"
         })
         .state('dashboard', {
           url:"/dashboard",

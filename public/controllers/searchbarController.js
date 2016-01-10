@@ -20,9 +20,12 @@
         }
       }
       //save selected show to user
-      $scope.selection= function(show){
+      $scope.selection= function(selected){
         //selected show
-        console.log(show);
+        show.save(selected).then(function(data){
+          console.log(data);
+        })
+
       }      
     }
 
