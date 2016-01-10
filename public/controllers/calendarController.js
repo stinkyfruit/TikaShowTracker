@@ -13,7 +13,9 @@
       $scope.clear = function() {
         $scope.dt = null;
       };
-
+      $scope.send = function(){
+        console.log($scope.dt);
+      };
       // Disable weekend selection
       // $scope.disabled = function(date, mode) {
       //   return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
@@ -35,6 +37,7 @@
       };
 
       $scope.setDate = function(year, month, day) {
+        console.log('setdate')
         $scope.dt = new Date(year, month, day);
       };
 
