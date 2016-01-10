@@ -38,7 +38,6 @@
       };
 
       $scope.setDate = function(year, month, day) {
-        console.log('setdate')
         $scope.dt = new Date(year, month, day);
       };
 
