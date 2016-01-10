@@ -14,6 +14,7 @@
         $scope.dt = null;
       };
       $scope.send = function(){
+        //submit
         console.log($scope.dt);
       };
       // Disable weekend selection
