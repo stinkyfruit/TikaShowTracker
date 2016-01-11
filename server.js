@@ -37,7 +37,7 @@ app.use(cookieParser());
 
 app.use(express.static(__dirname + '/public'));
 
-// app.use(session({resave: true, saveUninitialized: true, secret: "ILOVEUNICORNS", cookie: {maxAge: 60000}}));
+//settings for session cookie
 app.use(session({
   cookieName: 'session',
   secret: 'ILOVEUNICORNS',
@@ -46,6 +46,14 @@ app.use(session({
 }));
 
 
+//middleware function to create session for user
+var createSession = function(req, res, user){
+  return req.session.regenerate(function() {
+      req.session.user = user;
+      res.redirect('/');
+    });
+};
+
 //middleware function for session logic
 app.use(function(req, res, next){
   //check if session exists
@@ -53,8 +61,7 @@ app.use(function(req, res, next){
     //find user in db
     User.findOne({username: req.session.user.username}, function(err, user){
       if(user){
-      req.session.user = user;
-      res.locals.user = user;
+        //create session for user here?
       }
       //finish middleware and run next function
       next();
@@ -73,10 +80,27 @@ var checkLogin = function(req, res, next){
   }
 };
 
+
 //GET for signup
 app.get('/signup', function(req, res){
 
 });
+
+//GET for main page
+app.get('/', checkLogin, function(req, res){
+
+});
+
+// GET for logout 
+app.get('/logout', checkLogin, function(req, res){
+  // session.destroy() to kill session
+  req.session.destroy();
+  // route to '/login'
+  res.redirect('login');
+  }
+);
+
+
 
 //POST for signup
 app.post('/signup', function(req, res){
@@ -122,7 +146,6 @@ app.post('/login', function(req, res){
       //check if the match is true
       if (match){
       user.save();
-      res.redirect("/");
       console.log('LOGGED IN!');
       // res.send('LOGGED IN!');
     } else {
@@ -132,14 +155,6 @@ app.post('/login', function(req, res){
   });
 });
 
-// GET for logout 
-app.get('/logout', function(req, res){
-  // session.destroy() to kill session
-  req.session.destroy();
-  // route to '/login'
-  res.redirect('login');
-  }
-);
 
 
 //for when front end posts to api/shows - this is when the user selects a show to follow
@@ -153,12 +168,6 @@ app.post('/api/shows', function(req, res){
     res.send('Show saved to the database');
   // });
 });
-
-
-
-
-
-
 
 
 
