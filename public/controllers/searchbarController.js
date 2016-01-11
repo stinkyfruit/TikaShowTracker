@@ -21,7 +21,6 @@
       }
       //save selected show to user
       $scope.selection= function(selected){
-        //selected show
         show.save(selected).then(function(data){
           console.log(data);
         })
