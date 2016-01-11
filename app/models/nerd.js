@@ -11,12 +11,6 @@ var UserSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  session: {
-    type: String
-    //or type: Object if the whole Session Object is saved?
-    // ,
-    // required: true
-  },
   shows: {
     type: []
   }

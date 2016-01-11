@@ -37,7 +37,46 @@ app.use(cookieParser());
 
 app.use(express.static(__dirname + '/public'));
 
-app.use(session({resave: true, saveUninitialized: true, secret: "ILOVEUNICORNS", cookie: {maxAge: 60000}}));
+// app.use(session({resave: true, saveUninitialized: true, secret: "ILOVEUNICORNS", cookie: {maxAge: 60000}}));
+app.use(session({
+  cookieName: 'session',
+  secret: 'ILOVEUNICORNS',
+  duration: 1000000,
+  activeDuration: 300000,
+}));
+
+
+//middleware function for session logic
+app.use(function(req, res, next){
+  //check if session exists
+  if(req.session && req.session.user){
+    //find user in db
+    User.findOne({username: req.session.user.username}, function(err, user){
+      if(user){
+      req.session.user = user;
+      res.locals.user = user;
+      }
+      //finish middleware and run next function
+      next();
+    });
+  } else {
+    next();
+  }
+});
+
+//middleware function to check if user is logged in
+var checkLogin = function(req, res, next){
+  if(!req.session.user){
+    res.redirect('login');
+  } else {
+    next();
+  }
+};
+
+//GET for signup
+app.get('/signup', function(req, res){
+
+});
 
 //POST for signup
 app.post('/signup', function(req, res){
@@ -57,32 +96,13 @@ app.post('/signup', function(req, res){
     }
     //set password to hash
     user.password = hash;
-    //create a session for user now set to _expires.
-    user.session = req.session.cookie._expires;
     //create user in database with mongoose .create()
     User.create(user, function(err){
       if (err) { 
         console.log(err);
         throw err;
       }
-      //log user
-      console.log(user);
-      // what you will see from the terminal when user is consoled:
-      // { username: 'afasf@dfaf.com',
-      //  password: '$2a$10$4ugpuyCxQMt5QPKdDkL9L.KdK00xSLUbQ1b/12e1b7JKwxD9VanQ2',
-      //  session: 
-      //    Session {
-      //      cookie: 
-      //       { path: '/',
-      //        _expires: Mon Jan 11 2016 00:45:26 GMT-0800 (PST),
-      //        originalMaxAge: 60000,
-      //        httpOnly: true 
-      //       } 
-      //     } 
-      // }
-      // // redirect to main page
-      // res.redirect("/");
-      // send response
+      res.redirect('/login');
       res.send('success');
     });
   });
@@ -101,22 +121,11 @@ app.post('/login', function(req, res){
       if (err) throw err;
       //check if the match is true
       if (match){
-      // //give use a token
-      // user.access_token = hat();
-      //mongoose .save() the info to the db collection
       user.save();
-      // //create cookie session
-      // res.cookie('access_token', user.access_token, {maxAge: 900000, httpOnly: true});
-
-      //Check session
-        //if need, set the user.session to equal to session (or a propert of session)..
-
-      //redirect to the main page
       res.redirect("/");
       console.log('LOGGED IN!');
       // res.send('LOGGED IN!');
     } else {
-      //give an error
       res.send('CANNOT LOG IN!');
     }
     });
@@ -126,7 +135,9 @@ app.post('/login', function(req, res){
 // GET for logout 
 app.get('/logout', function(req, res){
   // session.destroy() to kill session
+  req.session.destroy();
   // route to '/login'
+  res.redirect('login');
   }
 );
 
