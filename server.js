@@ -49,8 +49,8 @@ app.use(session({
 //middleware function to create session for user
 var createSession = function(req, res, user){
   return req.session.regenerate(function() {
+      //request body tag on session and tag on user
       req.session.user = user;
-      res.redirect('/');
     });
 };
 
@@ -61,7 +61,8 @@ app.use(function(req, res, next){
     //find user in db
     User.findOne({username: req.session.user.username}, function(err, user){
       if(user){
-        //create session for user here?
+        //create session
+        createSession(req, res, user);
       }
       //finish middleware and run next function
       next();
@@ -74,12 +75,11 @@ app.use(function(req, res, next){
 //middleware function to check if user is logged in
 var checkLogin = function(req, res, next){
   if(!req.session.user){
-    res.redirect('login');
+    res.redirect('/login');
   } else {
     next();
   }
 };
-
 
 //GET for signup
 app.get('/signup', function(req, res){
@@ -88,47 +88,50 @@ app.get('/signup', function(req, res){
 
 //GET for main page
 app.get('/', checkLogin, function(req, res){
-
+  
 });
 
 // GET for logout 
 app.get('/logout', checkLogin, function(req, res){
   // session.destroy() to kill session
-  req.session.destroy();
-  // route to '/login'
-  res.redirect('login');
+  req.session.destroy(function(){
+      // route to '/login'
+      res.redirect('/log');
+    });
   }
 );
 
-
-
 //POST for signup
 app.post('/signup', function(req, res){
-  //Check if user exists
-    //if user exists
-      //route to main page '/'
-    // else stay on signup
-  //user object
-  var user = {
-      username: req.body.username,
-      password: req.body.password,
-    };
-  //hash password asynchronously 
-  bcrypt.hash(user.password, 10, function(err, hash){
-    if (err) {
-      throw err;
-    }
-    //set password to hash
-    user.password = hash;
-    //create user in database with mongoose .create()
-    User.create(user, function(err){
-      if (err) { 
-        console.log(err);
-        throw err;
+ 
+  var username =  req.body.username;
+
+  User.findOne({username: username}).then(function(user){
+    if(user){
+       res.sendStatus(403);
+    } else {
+      var userData = {
+        username :  req.body.username,
+        password :  req.body.password
       }
-      res.redirect('/login');
-      res.send('success');
-    });
+      //hash password asynchronously 
+      bcrypt.hash(userData.password, 10, function(err, hash){
+        if (err) {
+          throw err;
+        }
+        //set password to hash
+        userData.password = hash;
+        //create user in database with mongoose .create()
+        User.create(userData, function(err){
+          if (err) { 
+            console.log(err);
+            throw err;
+          }
+          createSession(req, res, userData);
+          res.redirect('/');
+        });
+      });
+    }
   });
 });
 
@@ -147,7 +150,10 @@ app.post('/login', function(req, res){
       if (match){
       user.save();
       console.log('LOGGED IN!');
-      // res.send('LOGGED IN!');
+      //create a session
+      createSession(req, res, user);
+      //redirect to main page
+      res.redirect('/');
     } else {
       res.send('CANNOT LOG IN!');
     }
