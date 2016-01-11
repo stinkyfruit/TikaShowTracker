@@ -155,7 +155,7 @@ app.post('/signup', function(req, res){
   });
 });
 
-// POST for login
+//POST for login
 app.post('/login', function(req, res){
   var user_login = {
     username: req.body.username
