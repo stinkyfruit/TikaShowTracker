@@ -6,14 +6,14 @@
         .factory('Auth', login)
 
     function login($http) {
-      
+      //login post request
       function signin(user){
         return $http({
           method: "POST",
-          url: "/signup",
+          url: "/login",
           data: user
         }).then(function(res){
-          console.log(res);
+          return res;
         })
       } 
       return {

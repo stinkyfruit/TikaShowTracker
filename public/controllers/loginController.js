@@ -8,8 +8,15 @@
     function loginController ($state, Auth) { 
       var vm = this;
       vm.login = function () {
-        Auth.login({username:"Allan", password:"hi"});
+        var user = {
+          username: vm.username,
+          password: vm.password
+        }
+        Auth.login(user).then(function(data){
+          console.log(data);
+        });
         // $state.go("dashboard.child")
+
       }
 
     }

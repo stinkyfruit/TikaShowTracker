@@ -25,6 +25,11 @@
           templateUrl: "../views/searchbar.html",
           controller:"searchbarController"
         })
+        .state('calendar', {
+          url:'/calendar',
+          templateUrl:'../views/calendar.html',
+          controller: "calendarController"
+        })
         .state('dashboard', {
           url:"/dashboard",
           templateUrl: "../views/dashboard.html",
