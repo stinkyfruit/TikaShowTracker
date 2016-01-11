@@ -5,12 +5,15 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
+var http = require('http');
 //bcrypt for encryption
 var bcrypt = require('bcrypt');
 //hat for token
 var hat = require('hat');
 //get the user model from our db schema
 var User = require('./app/models/nerd.js');
+
+var request = require('request');
 
 //connect to local database
 var database = 'mongodb://localhost/bugatti';
@@ -66,19 +69,16 @@ app.post('/login', function(req, res){
     if (err) throw err;
     //ascyhronous bcrypt compare 
     bcrypt.compare(req.body.password, user.password, function(err, match){
-      //check for err
-      console.log(user);
       if (err) throw err;
       //check if the match is true
-      if (match === true){
+      if (match){
       //give use a token
       user.access_token = hat();
       //mongoose .save() the info to the db collection
       user.save();
       //create cookie session
       res.cookie('access_token', user.access_token, {maxAge: 900000, httpOnly: true});
-      //log user
-      console.log(user);
+
       res.send('Logged in!');
     } else {
       res.send('Cannot log in!');
@@ -87,6 +87,17 @@ app.post('/login', function(req, res){
   });
 });
 
+//for when front end posts to api/shows - this is when the user selects a show to follow
+app.post('/api/shows', function(req, res){
+  // User.findOne(req.body.user, function(err, user){
+  //   if(err) throw err;
+    request('http://www.omdbapi.com/?i='+req.body.imdbID, function(error, res, body){
+      if (error) throw error;
+      console.log(body);
+    });
+    res.send('Show saved to the database');
+  // });
+});
 
 
 

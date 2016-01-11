@@ -14,6 +14,9 @@ var UserSchema = mongoose.Schema({
   access_token: {
     type: String,
     required: true
+  },
+  shows: {
+    type: []
   }
 });
 
