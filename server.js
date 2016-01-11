@@ -9,13 +9,10 @@ var cookieParser = require('cookie-parser');
 var bcrypt = require('bcrypt');
 //hat for token
 var hat = require('hat');
-//-------------------------------------------
 //get the user model from our db schema
 var User = require('./app/models/nerd.js');
 
 //connect to local database
-//note: when heroku runs this app, it will get the environment variable that was set
-//if statement: mongolab uri or this local host
 var database = 'mongodb://localhost/bugatti';
 mongoose.connect(database, function(err, result){
   if(err) return err;
@@ -32,60 +29,64 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 //shall we require our routes here?
-//is the path correct?
 // require('./public/js/appRoutes')
 
 app.use(express.static(__dirname + '/public'));
 
-//when the front-end sends a post request at signup
+//POST for signup
 app.post('/signup', function(req, res){
-  console.log(req.body);
   var user = {
+    //username is set to the request body's username
     username: req.body.username,
-    password:
-    //asynchronous hash function from bcrypt; pass encrypted and salt used
-    bcrypt.genSaltSync(10, function(err, salt){
-      if(err) throw err;
-      bcrypt.hash(req.body.password, salt, null, function(err, hash){
-        if(err) throw err;
-        return hash;
-      });
+    //password is set to the hashed password
+    password: bcrypt.hash(req.body.password, 10, function(err, hash){
+      if(err) {throw (err)};
+      return hash;
     }),
     //randomly generates a token by the hat module
     access_token: hat()
   };
+  //mongoose .create()
   User.create(user, function(err){
     if (err) throw err;
-    //maxAge is a string that is 'Convenient option for setting the expiry time relative to the current time in milliseconds.'
-    //httpOnly is a Boolean that '  Flags the cookie to be accessible only by the web server.'
+    //maxAge = expiration time in ms & httpOnly is boolean to flag cookie for server
     res.cookie('access_token', user.access_token, {maxAge: 900000, httpOnly: true});
     res.send('success');
   });
 });
 
-
+//POST for login
 app.post('/login', function(req, res){
   var user_login = {
     username: req.body.username
   };
 
+  //mongoose .findOne()
   User.findOne(user_login, function(err, user) {
-    if(err) throw err;
-    if(user && bcrypt.compare(req.body.password, user.password, function(err, match){
+    if (err) throw err;
+    //ascyhronous bcrypt compare 
+    bcrypt.compare(req.body.password, user.password, function(err, match){
+      //check for err
+      console.log(user);
       if (err) throw err;
-      return match;
-    })) {
+      //check if the match is true
+      if (match === true){
+      //give use a token
       user.access_token = hat();
+      //mongoose .save() the info to the db collection
       user.save();
+      //create cookie session
       res.cookie('access_token', user.access_token, {maxAge: 900000, httpOnly: true});
-      res.send('Successfully Logged In');
+      //log user
+      console.log(user);
+      res.send('Logged in!');
     } else {
-      res.send('Invalid Username and Password');
+      res.send('Cannot log in!');
     }
+    });
   });
 });
 
 
-//curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:3000/signup
 
 
