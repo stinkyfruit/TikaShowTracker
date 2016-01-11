@@ -10,6 +10,8 @@ var http = require('http');
 var bcrypt = require('bcrypt');
 //hat for token
 var hat = require('hat');
+//session module
+var session = require('express-session');
 //get the user model from our db schema
 var User = require('./app/models/nerd.js');
 
@@ -36,28 +38,43 @@ app.use(cookieParser());
 
 app.use(express.static(__dirname + '/public'));
 
+app.use(session({resave: true, saveUninitialized: true, secret: "ILOVEUNICORNS", cookie: {maxAge: 60000}}));
+
 //POST for signup
 app.post('/signup', function(req, res){
+  //user object
+  var user = {
+      username: req.body.username,
+      password: req.body.password,
+    };
 
-  // hash password here
-  bcrypt.hash(req.body.password, 10, function(err, hash){
+  //hash password asynchronously 
+  bcrypt.hash(user.password, 10, function(err, hash){
     if (err) {
       throw err;
     }
-    //after hash, create user
-    var user = {
-      username: req.body.username,
-      password: hash,
-      access_token: hat()
-    };
-
-    //create user in db
+    //set password to hash
+    user.password = hash;
+    //create a session for user
+    user.session = req.session;
+    //create user in database with mongoose .create()
     User.create(user, function(err){
       if (err) { 
+        console.log(err);
         throw err;
       }
-      //maxAge = expiration time in ms & httpOnly is boolean to flag cookie for server
-      res.cookie('access_token', user.access_token, {maxAge: 900000, httpOnly: true});
+      //log user
+      console.log(user);
+      /*what you will see from the terminal when user is consoled:
+      { username: 'afasf@dfaf.com',
+       password: '$2a$10$4ugpuyCxQMt5QPKdDkL9L.KdK00xSLUbQ1b/12e1b7JKwxD9VanQ2',
+       session: 
+         Session {
+           cookie: 
+            { path: '/',
+             _expires: Mon Jan 11 2016 00:45:26 GMT-0800 (PST),
+             originalMaxAge: 60000,
+             httpOnly: true } } }*/
       res.send('success');
     });
   });
@@ -88,11 +105,11 @@ app.post('/login', function(req, res){
       console.log(user);
       //WE NEED TO REROUTE TO THE INDEX
 
-      res.send('Logged in!');
+      res.send('LOGGED IN!');
     } else {
       //STAY ON LOGIN PAGE BUT GIVE AN ERROR THAT USERNAME/PASSWORD NOT VALID
 
-      res.send('Cannot log in!');
+      res.send('CANNOT LOG IN!');
     }
     });
   });

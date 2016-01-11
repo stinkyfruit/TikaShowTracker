@@ -11,8 +11,8 @@ var UserSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  access_token: {
-    type: String,
+  session: {
+    type: Object,
     required: true
   },
   shows: {
