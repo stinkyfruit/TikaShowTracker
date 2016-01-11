@@ -13,9 +13,9 @@
       $scope.clear = function() {
         $scope.dt = null;
       };
+      
+      //event handler for submission of date
       $scope.send = function(){
-        //submit
-        console.log($scope.dt);
         var obj = {
           date: $scope.dt,
           //need id of show clicked.
