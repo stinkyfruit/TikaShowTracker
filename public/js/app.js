@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app', ['ui.router', 'ui.select', 'ngSanitize'])
+        .module('app', ['ui.router', 'ui.select', 'ngSanitize', 'ui.bootstrap'])
         .config(config);
 
     function config($stateProvider, $urlRouterProvider) { 
@@ -31,10 +31,11 @@
           controller: "dashboardController",
           controllerAs: "dashboardVm"
         })
-          .state('dashboard.child', {
-            templateUrl: "../views/dashboardChild.html",
-            controller: "dashboardChildController",
-            controllerAs: "dashboardChildVm"
+          .state('dashboard.main', {
+            url: '/main',
+            templateUrl: "../views/dashboard_main.html",
+            controller: "dashboardMainController",
+            controllerAs: "dashboardMainVm"
           })
     }
 

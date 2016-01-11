@@ -1,0 +1,58 @@
+<section class="dashboard_main"> 
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+        <section class="result-container">
+          
+          <div class="row">
+            <!-- Movie poster -->
+            <div class="col-sm-2 col-md-2 poster-img">
+              <img src="http://ia.media-imdb.com/images/M/MV5BMTYwOTEzMDMzMl5BMl5BanBnXkFtZTgwNzExODIzNzE@._V1_SX300.jpg">
+            </div>
+  
+            <div class="col-sm-7 col-md-7 overview-info">
+              <div class="row">
+                <div class="col-sm-6 col-md-6 overview-info">
+                  <span class="title">How I Met Your Mother</span>
+                  <span class="series-info">Series 2005-2014</span>
+                </div>
+                <div class="col-sm-6 col-md-6 overview-info">
+                  <span class="watch-time-remaining text-right">12Hrs 32Min</span>
+                  <span class="watch-time text-right">Total watch time left</span>
+                </div>
+              </div>
+              <span class="episode-name">Name of Episode</span>
+              <span class="next-episode">Next episode to watch</span>
+              <span class="show-all-episodes" ng-click="showResults = !showResults">Show all episodes</span>
+            </div>
+          </div>
+
+          <div class="row drop-results" ng-show="showResults">
+            <div class="col-sm-offset-2 col-sm-2 col-md-7 results-info">
+              <div class="row">
+                <div class="run-time-title">RUN TIME</div>
+                  <uib-accordion close-others="oneAtATime" class="season-container clearfix">
+                    <uib-accordion-group heading="{{season.name}}" class="col-sm-12 season-name" ng-repeat="season in dashboardMainVm.data[0].seasons">
+                  <div class="col-sm-12"> 
+                    <div class="row episodes">
+                      <div ng-repeat="episode in season.episodes" div class="col-sm-12 episode-name">{{episode.title}}
+                      <span class="run-time pull-right">{{episode.runTime}}</span>
+                      </div>
+                    </div>
+                  </uib-accordion-group>
+                </uib-accordion>
+              </div>
+            </div>
+          </div>
+
+        </section>
+      </div>
+      
+    </div>
+  <div>
+</section>
+
+
+  
+  
