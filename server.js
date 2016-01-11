@@ -44,12 +44,17 @@ app.post('/signup', function(req, res){
     username: req.body.username,
     password:
     //asynchronous hash function from bcrypt; pass encrypted and salt used
-    bcrypt.genSaltSync(10, function(err, salt){
-      if(err) throw err;
-      bcrypt.hash(req.body.password, salt, null, function(err, hash){
-        if(err) throw err;
-        return hash;
-      });
+    // bcrypt.genSaltSync(10, function(err, salt){
+    //   if(err) throw err;
+    //   bcrypt.hash(req.body.password, null, null, function(err, hash){
+    //     if(err) throw err;
+    //     return hash;
+    //   });
+    // }),
+
+    bcrypt.hash(req.body.password, 10, function(err, hash){
+      if(err) {throw (err)};
+      return hash;
     }),
     //randomly generates a token by the hat module
     access_token: hat()
@@ -70,51 +75,82 @@ app.post('/login', function(req, res){
   //create a new token?
   // console.log(req.body);
 
-  //the request body
+  // the request body
   var user_login = {
-    username: req.body.username;
-    password: req.body.password;
+    username: req.body.username
+    // password: req.body.password;
   };
 
+
+  //
   // User.findOne(user_login, function(err, user) {
   //   if(err) throw err;
   //   if(user && bcrypt.compare(req.body.password, user.password, function(err, match){
-  //     if (err) throw err;
+  //     if (err) throw err; 
+  //     console.log(typeof req.body.password);
+  //     console.log(user.password);
+  //     console.log(match);
+      
   //     return match;
+
   //   })) {
   //     user.access_token = hat();
+  //     console.log(access_token);
   //     user.save();
   //     res.cookie('access_token', user.access_token, {maxAge: 900000, httpOnly: true});
   //     res.send('Successfully Logged In');
   //   } else {
   //     res.send('Invalid Username and Password');
   //   }
+  // });
+
+
+  //new auth
+
+  User.findOne(user_login, function(err, user) {
+    if (err) throw err;
+    if(bcrypt.compare(req.body.password, user.password, function(err, match){
+      console.log(user);
+      if (err) throw err;
+      console.log(match);
+      return match;
+    })) {
+      console.log('it matches');
+      res.send('VALID!');
+    } else {
+      res.send('Invalid Username and Password');
+    }
   });
-//   console.log(req.body);
-//   var user = {
-//     username: req.body.username,
-//     password:
-//     //asynchronous hash function from bcrypt; pass encrypted and salt used
-//     bcrypt.genSaltSync(10, function(err, salt){
-//       if(err) throw err;
-//       bcrypt.hash(req.body.password, salt, null, function(err, hash){
-//         if(err) throw err;
-//         return hash;
-//       });
-//     }),
-//     //randomly generates a token by the hat module
-//     access_token: hat()
-//   };
-//   console.log(user);
-//   User.create(user, function(err){
-//     if (err) throw err;
-//     //maxAge is a string that is 'Convenient option for setting the expiry time relative to the current time in milliseconds.'
-//     //httpOnly is a Boolean that '  Flags the cookie to be accessible only by the web server.'
-//     console.log('test');
-//     res.cookie('access_token', user.access_token, {maxAge: 900000, httpOnly: true});
-//     res.send('success');
-//   });
-// });
+
+});
+
+
+  // var user = {
+  //   username: req.body.username,
+  //   password:
+  //   //asynchronous hash function from bcrypt; pass encrypted and salt used
+  //   // bcrypt.genSaltSync(10, function(err, salt){
+  //   //   if(err) throw err;
+  //   //   bcrypt.hash(req.body.password, null, null, function(err, hash){
+  //   //     if(err) throw err;
+  //   //     return hash;
+  //   //   });
+  //   // }),
+
+  //   bcrypt.hashSync(req.body.password, 10, function(err, hash){
+  //     if(err) {throw (err)};
+  //     return hash;
+  //   }),
+  //   //randomly generates a token by the hat module
+  //   access_token: hat()
+  // };
+  // User.create(user, function(err){
+  //   if (err) throw err;
+  //   //maxAge is a string that is 'Convenient option for setting the expiry time relative to the current time in milliseconds.'
+  //   //httpOnly is a Boolean that '  Flags the cookie to be accessible only by the web server.'
+  //   res.cookie('access_token', user.access_token, {maxAge: 900000, httpOnly: true});
+  //   res.send('success');
+  // });
 
 
 //curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:3000/signup
