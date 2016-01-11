@@ -79,13 +79,21 @@ app.post('/login', function(req, res){
       //create cookie session
       res.cookie('access_token', user.access_token, {maxAge: 900000, httpOnly: true});
 
+      //log user
+      console.log(user);
+      //WE NEED TO REROUTE TO THE INDEX
+
+
       res.send('Logged in!');
     } else {
+      //STAY ON LOGIN PAGE BUT GIVE AN ERROR THAT USERNAME/PASSWORD NOT VALID
+
       res.send('Cannot log in!');
     }
     });
   });
 });
+
 
 //for when front end posts to api/shows - this is when the user selects a show to follow
 app.post('/api/shows', function(req, res){
@@ -99,5 +107,30 @@ app.post('/api/shows', function(req, res){
   // });
 });
 
+//POST for search
+app.post('/api/shows', function(req, res){
+/*body: 
+   { Title: 'The Lord of the Rings: The Fellowship of the Ring',
+     Year: '2001',
+     imdbID: 'tt0120737',
+     Type: 'movie',
+     Poster: 'http://ia.media-imdb.com/images/M/MV5BNTEyMjAwMDU1OV5BMl5BanBnXkFtZTcwNDQyNTkxMw@@._V1_SX300.jpg' },
+  _body: true,
+  read: [Function],
+  secret: undefined,
+  cookies: {},
+  signedCookies: {},
+  route: 
+   Route {
+     path: '/api/shows',
+     stack: [ [Object] ],
+     methods: { post: true } } }*/
+
+  //take the request from the client
+
+
+
+  console.log(req.body);
+});
 
 
