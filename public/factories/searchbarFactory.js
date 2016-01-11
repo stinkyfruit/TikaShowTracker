@@ -23,7 +23,7 @@
           url: "/api/shows",
           data: show
         }).then(function(res){
-          return 'posted';
+          return res;
         }, function(err){
           return 'did not post';
         })
