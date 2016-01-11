@@ -13,8 +13,6 @@ var hat = require('hat');
 var User = require('./app/models/nerd.js');
 
 //connect to local database
-// note: when heroku runs this app, it will get the environment variable that was set
-//if statement: mongolab uri or this local host
 var database = 'mongodb://localhost/bugatti';
 mongoose.connect(database, function(err, result){
   if(err) return err;
@@ -31,7 +29,6 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 //shall we require our routes here?
-//is the path correct?
 // require('./public/js/appRoutes')
 
 app.use(express.static(__dirname + '/public'));
@@ -52,8 +49,7 @@ app.post('/signup', function(req, res){
   //mongoose .create()
   User.create(user, function(err){
     if (err) throw err;
-    //maxAge is a string that is 'Convenient option for setting the expiry time relative to the current time in milliseconds.'
-    //httpOnly is a Boolean that '  Flags the cookie to be accessible only by the web server.'
+    //maxAge = expiration time in ms & httpOnly is boolean to flag cookie for server
     res.cookie('access_token', user.access_token, {maxAge: 900000, httpOnly: true});
     res.send('success');
   });
@@ -63,7 +59,6 @@ app.post('/signup', function(req, res){
 app.post('/login', function(req, res){
   var user_login = {
     username: req.body.username
-    // password: req.body.password;
   };
 
   //mongoose .findOne()
@@ -93,7 +88,5 @@ app.post('/login', function(req, res){
 });
 
 
-
-//curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:3000/signup
 
 
