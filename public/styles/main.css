@@ -77,3 +77,126 @@ html, body {
 
 
 
+/* Main Dashboard View */
+
+.dashboard_main {
+  padding-top: 50px;
+}
+
+.dashboard_main .result-container {
+  height: 200px;
+  /*border: 1px solid #ccc;*/
+}
+
+.dashboard_main img {
+  max-width: 120px;
+}
+
+.dashboard_main .overview-info > span {
+  display: block;
+}
+
+.overview-info > .title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.overview-info > .series-info {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.overview-info > .watch-time {
+  font-size: 12px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.overview-info > .watch-time-remaining {
+  font-size: 14px;
+  font-weight: 800;
+  
+}
+
+.overview-info > .next-episode {
+  font-size: 12px;
+  font-weight: 400;
+  margin-bottom: 35px;
+
+}
+
+.overview-info > .episode-name {
+  font-size: 16px;
+  font-weight: 800;
+
+}
+
+
+.overview-info > .show-all-episodes {
+  display: inline-block !important;
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  transition: 0.4s;
+}
+
+.overview-info > .show-all-episodes:hover {
+  background: #BF209A;
+  border: 1px solid #BF209A;
+  color: #FFF;
+}
+
+.season-container {
+  margin-bottom: 10px;
+}
+
+.season-name {
+  position: relative;
+  padding: 0px;
+}
+
+.season-name > .caret {
+  position: absolute;
+  top: 10px;
+  left: -5px;
+}
+
+
+.drop-results {
+  padding-top: 10px;
+}
+
+.results-info {
+  position: relative;
+}
+
+.run-time-title {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  color: #ccc;
+  font-size: 10px
+}
+
+
+.results-info .season-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.episodes .episode-name {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+/*.episode-name > .run-time {
+  float: right;
+}*/
+
+

@@ -36,10 +36,11 @@
           controller: "dashboardController",
           controllerAs: "dashboardVm"
         })
-          .state('dashboard.child', {
-            templateUrl: "../views/dashboardChild.html",
-            controller: "dashboardChildController",
-            controllerAs: "dashboardChildVm"
+          .state('dashboard.main', {
+            url: '/main',
+            templateUrl: "../views/dashboard_main.html",
+            controller: "dashboardMainController",
+            controllerAs: "dashboardMainVm"
           })
     }
 
