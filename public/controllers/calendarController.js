@@ -4,7 +4,7 @@
     angular
       .module('app')
       .controller('calendarController', calendarController)
-    function calendarController($scope) {
+    function calendarController($scope, calendar) {
       $scope.today = function() {
         $scope.dt = new Date();
       };
@@ -16,6 +16,13 @@
       $scope.send = function(){
         //submit
         console.log($scope.dt);
+        var obj = {
+          date: $scope.dt,
+          //need id of show clicked.
+        }
+        calendar.saveDate(obj).then(function(data){
+          console.log(data);
+        });
       };
       // Disable weekend selection
       // $scope.disabled = function(date, mode) {

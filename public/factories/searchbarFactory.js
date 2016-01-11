@@ -8,7 +8,6 @@
     function shows($http) {
       //GET search query request to imdb.com
       function search(show){
-
         var query = show.split(' ').join('+');
         return $http({
           method: "GET",
@@ -17,6 +16,7 @@
           return res.data.Search;
         })
       }
+      //POST request to save selected show from search bar to local server database
       function save(show){
         return $http({
           method: "POST",
