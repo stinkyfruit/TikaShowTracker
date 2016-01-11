@@ -37,7 +37,7 @@ app.use(cookieParser());
 app.use(express.static(__dirname + '/public'));
 
 //POST for signup
-app.post('/login', function(req, res){
+app.post('/signup', function(req, res){
 
   // hash password here
   bcrypt.hash(req.body.password, 10, function(err, hash){
@@ -64,39 +64,39 @@ app.post('/login', function(req, res){
 });
 
 //POST for login
-// app.post('/login', function(req, res){
-//   var user_login = {
-//     username: req.body.username
-//   };
+app.post('/login', function(req, res){
+  var user_login = {
+    username: req.body.username
+  };
 
-//   //mongoose .findOne()
-//   User.findOne(user_login, function(err, user) {
-//     if (err) throw err;
-//     //ascyhronous bcrypt compare 
-//     bcrypt.compare(req.body.password, user.password, function(err, match){
-//       if (err) throw err;
-//       //check if the match is true
-//       if (match){
-//       //give use a token
-//       user.access_token = hat();
-//       //mongoose .save() the info to the db collection
-//       user.save();
-//       //create cookie session
-//       res.cookie('access_token', user.access_token, {maxAge: 900000, httpOnly: true});
+  //mongoose .findOne()
+  User.findOne(user_login, function(err, user) {
+    if (err) throw err;
+    //ascyhronous bcrypt compare 
+    bcrypt.compare(req.body.password, user.password, function(err, match){
+      if (err) throw err;
+      //check if the match is true
+      if (match){
+      //give use a token
+      user.access_token = hat();
+      //mongoose .save() the info to the db collection
+      user.save();
+      //create cookie session
+      res.cookie('access_token', user.access_token, {maxAge: 900000, httpOnly: true});
 
-//       //log user
-//       console.log(user);
-//       //WE NEED TO REROUTE TO THE INDEX
+      //log user
+      console.log(user);
+      //WE NEED TO REROUTE TO THE INDEX
 
-//       res.send('Logged in!');
-//     } else {
-//       //STAY ON LOGIN PAGE BUT GIVE AN ERROR THAT USERNAME/PASSWORD NOT VALID
+      res.send('Logged in!');
+    } else {
+      //STAY ON LOGIN PAGE BUT GIVE AN ERROR THAT USERNAME/PASSWORD NOT VALID
 
-//       res.send('Cannot log in!');
-//     }
-//     });
-//   });
-// });
+      res.send('Cannot log in!');
+    }
+    });
+  });
+});
 
 
 //for when front end posts to api/shows - this is when the user selects a show to follow
