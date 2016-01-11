@@ -43,7 +43,7 @@ app.post('/signup', function(req, res){
     username: req.body.username,
     //password is set to the hashed password
     password: bcrypt.hash(req.body.password, 10, function(err, hash){
-      if(err) {throw (err)};
+      if(err) throw err;
       return hash;
     }),
     //randomly generates a token by the hat module
@@ -88,15 +88,26 @@ app.post('/login', function(req, res){
 });
 
 //for when front end posts to api/shows - this is when the user selects a show to follow
-app.post('/api/shows', function(req, res){
-  // User.findOne(req.body.user, function(err, user){
-  //   if(err) throw err;
-    request('http://www.omdbapi.com/?i='+req.body.imdbID, function(error, res, body){
-      if (error) throw error;
-      console.log(body);
-    });
-    res.send('Show saved to the database');
-  // });
+app.post('/api/shows', function(req, response){
+  // if(req.user) {
+    // User.findOne({username: 'kristen'}, function(err){
+    //   if(err) throw err;
+      request('http://www.omdbapi.com/?i='+req.body.imdbID, function(error, res, body){
+        if (error) throw error;
+        User.update({username: "kristen"}, {$push: {shows: body}}, {upinsert: true}, function(err){
+          if(error) {
+            console.log('error');
+          } else {
+            response.send(body);
+            console.log("successfully added show to the database");
+          }
+        });
+
+      });
+    // });
+  // } else {
+  //   res.redirect('/login');
+  // }
 });
 
 

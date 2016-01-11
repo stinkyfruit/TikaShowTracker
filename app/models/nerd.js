@@ -11,10 +11,6 @@ var UserSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  access_token: {
-    type: String,
-    required: true
-  },
   shows: {
     type: []
   }
